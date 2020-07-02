@@ -21,6 +21,7 @@ public class deathscreen : MonoBehaviour
 
 	private void Start()
   	{
+      //get stats from playerprefs
   	  worldX = PlayerPrefs.GetInt("worldX");
       worldY = PlayerPrefs.GetInt("worldY");
       worldZ = PlayerPrefs.GetInt("worldZ");
@@ -28,30 +29,22 @@ public class deathscreen : MonoBehaviour
       blocksplaced = PlayerPrefs.GetFloat("blocksplaced");
       deleteTime = PlayerPrefs.GetFloat("deleteTime");
       highscore = PlayerPrefs.GetFloat("highscore");
-      //Debug.Log(worldX);
-      //Debug.Log(worldY);
-      //Debug.Log(worldZ);
-      //Debug.Log(surviveTime);
-      //Debug.Log(blocksplaced);
-      //Debug.Log(deleteTime);
-      //Debug.Log(PlayerPrefs.GetString("surviveTime"));
+
+      //score calculation algorithm
 	    currentscore = ((surviveTime * (1/deleteTime))) + (blocksplaced / 2) - (((float)worldX + (float)worldY + (float)worldZ)/3);
-      Debug.Log(currentscore);
+      
+      //set text of death stat text to the stats from playerprefs
       timesurvivedtext.GetComponent<TextMesh>().text = PlayerPrefs.GetFloat("surviveTime").ToString();
 	    blocksplacedtext.GetComponent<TextMesh>().text = PlayerPrefs.GetFloat("blocksplaced").ToString();
       currentscoretext.GetComponent<TextMesh>().text = currentscore.ToString();
+      
+      //setting new highscore system
       if(currentscore > highscore)
       {
         highscore = currentscore;
         PlayerPrefs.SetFloat("highscore", highscore);
       }
+      //set text of highscore
       highscoretext.GetComponent<TextMesh>().text = highscore.ToString();
   	}
-  /*
-      SLIDER VALUES FOR REFERENCE
-      DIFFICULTY (DELETION TIME) = 0 - 2
-      X = 0 - 35
-      Z = 0 - 35
-      Y = 0 - 6
-  */
 }
