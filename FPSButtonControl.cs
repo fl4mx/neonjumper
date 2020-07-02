@@ -37,41 +37,14 @@ public class FPSButtonControl :MonoBehaviour
 
   void Start()
   {
-    //to fix button cross/tick reset on new scene load
+    // Fix button cross/tick reset on new scene load
     int spaz = PlayerPrefs.GetInt("spaz");
     int legacy = PlayerPrefs.GetInt("legacy");
     int music = PlayerPrefs.GetInt("music");
-/*
-    if (spaz == 1){
-    spazcheck.GetComponent<TextMesh>().text = "✓";
-    }
-    else{
-    spazcheck.GetComponent<TextMesh>().text = "✗";
-    }
-    
-    if (legacy == 1){
-    legacycheck.GetComponent<TextMesh>().text = "✓";  
-    }
-    else{
-    legacycheck.GetComponent<TextMesh>().text = "✗";
-    }
-    
-    if (music == 1){
-    musiccheck.GetComponent<TextMesh>().text = "✓";
-    }
-    else{
-    musiccheck.GetComponent<TextMesh>().text = "✗";
-    }
-  */
   }
 
 
-  //private Text length = GameObject.Find("Length_text").GetComponent<TMPro.TextMeshProUGUI>();          //worldX
-  //private Text width = GameObject.Find("Width_text").GetComponent<TMPro.TextMeshProUGUI>();            //worldZ
-  //private Text height = GameObject.Find("Height_text").GetComponent<TMPro.TextMeshProUGUI>();          //worldY
-  //private Text difficulty = GameObject.Find("Difficulty_Text").GetComponent<Text>();  //deleteTime
-
-  // This function is triggered when the mouse cursor is over the GameObject on which this script runs
+  // Function triggered when the mouse cursor is over the GameObject on which this script runs, for button functionality
   void OnMouseOver()
   {
     // If the left mouse button is pressed
@@ -79,7 +52,7 @@ public class FPSButtonControl :MonoBehaviour
     {
       switch (this.tag)
       {
-      //mainmenu buttons
+      // Main Menu
       case "LevelSelect":
         SceneManager.LoadScene("levelSelect_new");
         break;
@@ -90,7 +63,7 @@ public class FPSButtonControl :MonoBehaviour
         SceneManager.LoadScene("instructions");
         break;
       case "Exit":
-        // save any game data here
+        // Save data here
         #if UNITY_EDITOR
           // Application.Quit() does not work in the editor so
           // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
@@ -110,20 +83,20 @@ public class FPSButtonControl :MonoBehaviour
       case "easy":
         SceneManager.LoadScene("gameLevel");
         PlayerPrefs.SetFloat("deleteTime", 0.07F); //stores deleteTime in a playerPrefs key of "deleteTime" which can then be called in WorldGenerator script
-        PlayerPrefs.SetInt("worldX", 20);
+        PlayerPrefs.SetInt("worldX", 20); //similarly dimensions
         PlayerPrefs.SetInt("worldZ", 20);
         PlayerPrefs.SetInt("worldY", 5);
         break;
       case "medium":
         SceneManager.LoadScene("gameLevel");
-        PlayerPrefs.SetFloat("deleteTime", 0.035F); //stores deleteTime in a playerPrefs key of "deleteTime" which can then be called in WorldGenerator script
+        PlayerPrefs.SetFloat("deleteTime", 0.035F);
         PlayerPrefs.SetInt("worldX", 20);
         PlayerPrefs.SetInt("worldZ", 20);
         PlayerPrefs.SetInt("worldY", 5);
         break;
       case "hard":
         SceneManager.LoadScene("gameLevel");
-        PlayerPrefs.SetFloat("deleteTime", 0.015F); //stores deleteTime in a playerPrefs key of "deleteTime" which can then be called in WorldGenerator script
+        PlayerPrefs.SetFloat("deleteTime", 0.015F);
         PlayerPrefs.SetInt("worldX", 15);
         PlayerPrefs.SetInt("worldZ", 15);
         PlayerPrefs.SetInt("worldY", 6);        
@@ -138,7 +111,7 @@ public class FPSButtonControl :MonoBehaviour
         break;
 
 
-      //instruction/option buttons
+      // Instruction/option buttons
       case "spazmode":
         int spaz = PlayerPrefs.GetInt("spaz");
         if (spaz == 1){
@@ -175,24 +148,22 @@ public class FPSButtonControl :MonoBehaviour
 
 
 
-      //custom level buttons
+      // Custom level buttons
       case "lengthadd":
         worldX = PlayerPrefs.GetInt("worldX");
         if(worldX < 30) //30 instead of 35 for optimisation purposes
         {
           worldX += 1;
         }
-        //GameObject.Find("Length_text").GetComponent<Text>().text = worldX.ToString();
         Ltext.GetComponent<TextMesh>().text = worldX.ToString();
         PlayerPrefs.SetInt("worldX", worldX);
         break;
       case "lengthminus":
         worldX = PlayerPrefs.GetInt("worldX");
-        if(worldX > 3) //30 instead of 35 for optimisation purposes
+        if(worldX > 3)
         {
           worldX -= 1;
         }
-        //GameObject.Find("Length_text").GetComponent<Text>().text = worldX.ToString();
         Ltext.GetComponent<TextMesh>().text = worldX.ToString();
         PlayerPrefs.SetInt("worldX", worldX);
         break;
@@ -203,38 +174,34 @@ public class FPSButtonControl :MonoBehaviour
         {
           worldZ += 1;
         }
-        //GameObject.Find("Width_text").GetComponent<Text>().text = worldZ.ToString();
         Wtext.GetComponent<TextMesh>().text = worldZ.ToString();
         PlayerPrefs.SetInt("worldZ", worldZ);
         break;
       case "widthminus":
         worldZ = PlayerPrefs.GetInt("worldZ");
-        if(worldZ > 3) //likewise, 30 instead of 35 for optimisation purposes
+        if(worldZ > 3)
         {
           worldZ -= 1;
         }
-        //GameObject.Find("Width_text").GetComponent<Text>().text = worldZ.ToString();
         Wtext.GetComponent<TextMesh>().text = worldZ.ToString();
         PlayerPrefs.SetInt("worldZ", worldZ);
         break;
       
       case "heightadd":
         worldY = PlayerPrefs.GetInt("worldY");
-        if(worldY < 6) //30 instead of 35 for optimisation purposes
+        if(worldY < 6) //6 instead of 35 for optimisation purposes
         {
           worldY += 1;
         }
-        //GameObject.Find("Height_text").GetComponent<Text>().text = worldY.ToString();
         Htext.GetComponent<TextMesh>().text = worldY.ToString();
         PlayerPrefs.SetInt("worldY", worldY);
         break;
       case "heightminus":
         worldY = PlayerPrefs.GetInt("worldY");
-        if(worldY > 1) //30 instead of 35 for optimisation purposes
+        if(worldY > 1)
         {
           worldY -= 1;
         }
-        //GameObject.Find("Height_text").GetComponent<Text>().text = worldY.ToString();
         Htext.GetComponent<TextMesh>().text = worldY.ToString();
         PlayerPrefs.SetInt("worldY", worldY);
         break;
@@ -245,7 +212,6 @@ public class FPSButtonControl :MonoBehaviour
         {
           difficulty += 0.2f;
         }
-        //GameObject.Find("Height_text").GetComponent<Text>().text = worldY.ToString();
         Dtext.GetComponent<TextMesh>().text = difficulty.ToString();
         PlayerPrefs.SetFloat("difficulty", difficulty);
         PlayerPrefs.SetFloat("deleteTime", Mathf.Pow(10.0f, (-1*difficulty)));
@@ -256,7 +222,6 @@ public class FPSButtonControl :MonoBehaviour
         {
           difficulty -= 0.2f;
         }
-        //GameObject.Find("Height_text").GetComponent<Text>().text = worldY.ToString();
         Dtext.GetComponent<TextMesh>().text = difficulty.ToString();
         PlayerPrefs.SetFloat("difficulty", difficulty);
         PlayerPrefs.SetFloat("deleteTime", Mathf.Pow(10.0f, (-1*difficulty)));
@@ -270,10 +235,11 @@ public class FPSButtonControl :MonoBehaviour
 
       //level resume buttons
       case "playpause":
+        //grab functionality from pausecontroller class
         pausecontroller pcplaypause = pausecontrollergameobject.GetComponent<pausecontroller>();
-        //pausecontrollergameobject.GetComponent<pausecontroller>().PauseGame();
         pcplaypause.gameIsPaused = !pcplaypause.gameIsPaused;
         pcplaypause.PauseGame();
+        //switch aroud text of pause and resume button
         if (pcplaypause.gameIsPaused == false)
         {
           Debug.Log("change to pause");
@@ -287,9 +253,11 @@ public class FPSButtonControl :MonoBehaviour
         Debug.Log("RESUME GAME");
         break;
       case "levelback":
+        //also functionality from pausecontroller class
         pausecontroller pclevelback = pausecontrollergameobject.GetComponent<pausecontroller>();
         pclevelback.gameIsPaused = true;
         pclevelback.PauseGame();
+        //back button
         SceneManager.LoadScene("mainMenu_new");
         break;
       }
