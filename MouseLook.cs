@@ -7,6 +7,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [Serializable]
     public class MouseLook
     {
+        //defining some control values
         public float XSensitivity = 2f;
         public float YSensitivity = 2f;
         public bool clampVerticalRotation = true;
@@ -21,21 +22,25 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion m_CameraTargetRot;
         private bool m_cursorIsLocked = true;
 
+
+        //init method
         public void Init(Transform character, Transform camera)
         {
             m_CharacterTargetRot = character.localRotation;
             m_CameraTargetRot = camera.localRotation;
         }
 
-
+        //rotate the playerview camera in correct direction fromm mouse movement
         public void LookRotation(Transform character, Transform camera)
         {
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity;
 
+            //relevant quaternions for rotation
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
 
+            //clamp vertical rotation to fix up bugs
             if(clampVerticalRotation)
                 m_CameraTargetRot = ClampRotationAroundXAxis (m_CameraTargetRot);
 
@@ -55,6 +60,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             UpdateCursorLock();
         }
 
+        //cursorlock to keep cursor in the center and act as a "crosshair".
+        //IMPORTANT!!!
         public void SetCursorLock(bool value)
         {
             lockCursor = value;
@@ -74,6 +81,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void InternalLockUpdate()
         {
+            //standard mouse controllers
+            //left click to lock in
+            //esc to unlock
+            
             if(Input.GetMouseButtonUp(0))
             {
                 m_cursorIsLocked = true;
@@ -96,8 +107,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
+        //define rotation clampers
         Quaternion ClampRotationAroundXAxis(Quaternion q)
         {
+            //standard codes
             q.x /= q.w;
             q.y /= q.w;
             q.z /= q.w;
